@@ -1,0 +1,68 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages、
+		{
+			"path": "pages/gymTest/index",
+			"style":{
+				"navigationBarTitleText":"体能测试",
+				"app-plus":{
+					"titleNView" : {
+						"backgroundColor" : "#FFFFFF"
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/home/index",
+			"style":{
+				"navigationBarTitleText":"首页"
+			}
+		},
+		{
+			"path": "pages/home/idea",
+			"style":{
+				"navigationBarTitleText":"反馈和建议"
+			}
+		},
+		{
+			"path": "pages/book/index",
+			"style":{
+				"navigationBarTitleText":"训练图文"
+			}
+		},
+		{
+			"path": "pages/book/addBook",
+			"style":{
+				"navigationBarTitleText":"训练图文发布"
+			}
+		},
+		{
+			"path": "pages/book/myBook",
+			"style":{
+				"navigationBarTitleText":"我的"
+			}
+		},
+		
+		{
+			"path": "pages/gymTest/default",
+			"style":{
+				"navigationBarTitleText":"测试详情"
+			}
+		},
+		{
+			"path": "pages/gymTest/dataCompare",
+			"style":{
+				"navigationBarTitleText":"数据对比"
+			}
+		},
+		{
+			"path": "pages/xlJd/index",
+			"style":{
+				"navigationBarTitleText":"训练基地"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationStyle": "custom",
+		"navigationBarTextStyle": "white"
+	}
+}
