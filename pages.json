@@ -1,5 +1,12 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages、
+		
+		{
+			"path": "pages/home/index",
+			"style":{
+				"navigationBarTitleText":"首页"
+			}
+		},
 		{
 			"path": "pages/gymTest/index",
 			"style":{
@@ -9,12 +16,6 @@
 						"backgroundColor" : "#FFFFFF"
 					}
 				}
-			}
-		},
-		{
-			"path": "pages/home/index",
-			"style":{
-				"navigationBarTitleText":"首页"
 			}
 		},
 		{
@@ -58,6 +59,24 @@
 			"path": "pages/xlJd/index",
 			"style":{
 				"navigationBarTitleText":"训练基地"
+			}
+		},
+		{
+			"path": "pages/xlDw/index",
+			"style":{
+				"navigationBarTitleText":"训练单位"
+			}
+		},
+		{
+			"path": "pages/xlDw/default",
+			"style":{
+				"navigationBarTitleText":"训练单位详情"
+			}
+		},
+		{
+			"path": "pages/planMark/index",
+			"style":{
+				"navigationBarTitleText":"计划制定"
 			}
 		}
 	],

@@ -16,7 +16,7 @@
 		<!-- 前台展示区域 -->
 		<view class="main" @click.stop="closeIsShowBj"  v-if="isshowBefore">
 			<view class="moduleBox isFlexSpace">
-				<view v-for="(item,index) in moduleList" :key="item.id" v-if="item.isShow">
+				<view v-for="(item,index) in moduleList" :key="item.id" v-if="item.isShow" @click="goDefault(item.id)">
 					<image :src="item.src"></image>
 					<view class="moduleTitle">{{item.name}}</view>
 					<view class="moduleTxt">{{item.txt}}</view>
@@ -142,6 +142,23 @@
 			closeSheet(){
 				this.$refs['openSucess'].close();
 			},
+			goDefault(id){
+				if(id==1){
+					uni.navigateTo({
+						url : "../planMark/index"
+					})
+				}
+				if(id==3){
+					uni.navigateTo({
+						url : "../xlDw/index"
+					})
+				}
+				else if(id==4){
+					uni.navigateTo({
+						url : "../xlJd/index"
+					})
+				}
+			},
 			goUrl(id){
 				if(id==7){
 					uni.navigateTo({
@@ -248,7 +265,7 @@
 			.moduleTxt{
 				font-size: 24rpx;
 				opacity: 0.6;
-				margin-top: 0.12rem;
+				margin-top:12rpx;
 			}
 			.moduleBjIcon{
 				width:32rpx;
@@ -256,7 +273,7 @@
 				background: #1296DB;
 				border-radius: 50%;
 				color: white;
-				font-size: 0.18rem;
+				font-size: 18rpx;
 				position: absolute;
 				top:8rpx;
 				right: 8rpx;

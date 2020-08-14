@@ -268,7 +268,7 @@
 				align-items:center;
 				text{
 					display:inline-block;
-					max-width:2.4rem;
+					max-width:240rpx;
 				}
 			}
 			image{
@@ -315,7 +315,7 @@
 				}
 			}
 			.nzBox{
-				margin-top: 0.12rem;
+				margin-top: 12rpx;
 				font-weight: bold;
 			}
 			.objectName{

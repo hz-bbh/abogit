@@ -1,6 +1,6 @@
 <template>
 	<view class="objectListBox">
-		<view v-for="(obj,index)  in objectList"   class="objectList"  :class="{'objectListActive':index==0 || index==4}"   :key="index"  @click="goClick(obj.id)">
+		<view v-for="(obj,index)  in objectList"   class="objectList"  :class="{'objectListActive':index==0 || index==4 || index==8}"   :key="index"  @click="goClick(obj.id)">
 			<image :src="obj.src"  :class="{'noRadius':obj.isNoRadius}"></image>
 			<view>{{obj.name}}</view>
 			<view class="objectListIcon isFlexCenter"  @click.stop="hide(index)" v-if="isShowBjIcon">一</view>
