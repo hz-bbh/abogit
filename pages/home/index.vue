@@ -148,7 +148,12 @@
 						url : "../planMark/index"
 					})
 				}
-				if(id==3){
+				else if(id==2){
+					uni.navigateTo({
+						url : "../planAlllook/index"
+					})
+				}
+				else if(id==3){
 					uni.navigateTo({
 						url : "../xlDw/index"
 					})

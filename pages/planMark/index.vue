@@ -5,7 +5,7 @@
 		</pageHead>
 		<titleList name="训练计划"></titleList>
 		<view class="moduleBox">
-			<view v-for="(item,index) in moduleList" :key="item.id"  :class="{'marLeft':index==0 || index ==4}" v-if="item.isShow" :style="{'background':item.bgColor}">
+			<view v-for="(item,index) in moduleList" :key="item.id" @click="goPlan(item.id)"  :class="{'marLeft':index==0 || index ==4}" v-if="item.isShow" :style="{'background':item.bgColor}">
 				<view class="moduleTitle">{{item.name}}</view>
 				<view class="moduleTxt">时间</view>
 				<view class="moduleTxt">内容</view>
@@ -14,7 +14,7 @@
 		
 		<titleList name="方案总结"></titleList>
 		<view class="moduleBox">
-			<view v-for="(item,index) in moduleList2" :key="item.id" v-if="item.isShow"    :class="{'marLeft':index==0 || index ==4}"   :style="{'background':item.bgColor}">
+			<view v-for="(item,index) in moduleList2" :key="item.id"   @click="goPlan(item.id)"  v-if="item.isShow"    :class="{'marLeft':index==0 || index ==4}"   :style="{'background':item.bgColor}">
 				<view class="moduleTitle">{{item.name}}</view>
 				<view class="moduleTxt">时间</view>
 				<view class="moduleTxt">内容</view>
@@ -33,11 +33,45 @@
 					{id:4,name:"年计划",txt:"文本",src:"/static/homeIcon/xlj.png",isShow:true,"bgColor":"#F6C3C3"}
 				],
 				moduleList2 : [
-					{id:1,name:"方案总结",txt:"文本",src:"/static/homeIcon/jh.png",isShow:true,"bgColor":"#F6C3C3"},
-					{id:2,name:"阶段总结",txt:"文本",src:"/static/homeIcon/jha.png",isShow:true,"bgColor":"#9BCCE6"},
+					{id:5,name:"阶段总结",txt:"文本",src:"/static/homeIcon/jh.png",isShow:true,"bgColor":"#F6C3C3"},
+					{id:6,name:"年度总结",txt:"文本",src:"/static/homeIcon/jha.png",isShow:true,"bgColor":"#9BCCE6"},
 				],
 			}
 		},
+		methods:{
+			goPlan(id){
+				if(id==1){
+					uni.navigateTo({
+						url : "lessonPlan"
+					})
+				}
+				else if(id==2){
+					uni.navigateTo({
+						url : "weekPlan"
+					})
+				}
+				else if(id==3){
+					uni.navigateTo({
+						url : "stangePlan"
+					})
+				}
+				else if(id==4){
+					uni.navigateTo({
+						url : "yearPlan"
+					})
+				}
+				else if(id==5){
+					uni.navigateTo({
+						url : "stangeAll"
+					})
+				}
+				else if(id==6){
+					uni.navigateTo({
+						url : "yearAll"
+					})
+				}
+			}
+		}
 	}
 </script>
 <style lang="less">

@@ -14,6 +14,9 @@
 
 <style>
 	/*每个页面公共css */
+	page{
+		background: #f6f8f7;
+	}
 	.lineOne{
 		overflow: hidden;
 		text-overflow: ellipsis;

@@ -1,6 +1,5 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages、
-		
 		{
 			"path": "pages/home/index",
 			"style":{
@@ -18,6 +17,7 @@
 				}
 			}
 		},
+		
 		{
 			"path": "pages/home/idea",
 			"style":{
@@ -77,6 +77,126 @@
 			"path": "pages/planMark/index",
 			"style":{
 				"navigationBarTitleText":"计划制定"
+			}
+		},
+		{
+			"path": "pages/planMark/weekPlan",
+			"style":{
+				"navigationStyle": "default",
+				"navigationBarTitleText":"周计划",
+				"navigationBarBackgroundColor":"#FFFFFF",
+				"navigationBarTextStyle": "black",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"width" : "70rpx",
+							"text": "提交",
+							"fontSize":"28rpx",
+							"color": "#1492FF"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/planMark/lessonPlan",
+			"style":{
+				"navigationStyle": "default",
+				"navigationBarTitleText":"课程计划",
+				"navigationBarBackgroundColor":"#FFFFFF",
+				"navigationBarTextStyle": "black",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"width" : "70rpx",
+							"text": "提交",
+							"fontSize":"28rpx",
+							"color": "#1492FF"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/planMark/stangePlan",
+			"style":{
+				"navigationStyle": "default",
+				"navigationBarTitleText":"阶段计划",
+				"navigationBarBackgroundColor":"#FFFFFF",
+				"navigationBarTextStyle": "black",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"width" : "70rpx",
+							"text": "提交",
+							"fontSize":"28rpx",
+							"color": "#1492FF"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/planMark/yearPlan",
+			"style":{
+				"navigationStyle": "default",
+				"navigationBarTitleText":"年计划",
+				"navigationBarBackgroundColor":"#FFFFFF",
+				"navigationBarTextStyle": "black",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"width" : "70rpx",
+							"text": "提交",
+							"fontSize":"28rpx",
+							"color": "#1492FF"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/planMark/yearAll",
+			"style":{
+				"navigationStyle": "default",
+				"navigationBarTitleText":"年总结",
+				"navigationBarBackgroundColor":"#FFFFFF",
+				"navigationBarTextStyle": "black",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"width" : "70rpx",
+							"text": "提交",
+							"fontSize":"28rpx",
+							"color": "#1492FF"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/planMark/stangeAll",
+			"style":{
+				"navigationStyle": "default",
+				"navigationBarTitleText":"阶段总结",
+				"navigationBarBackgroundColor":"#FFFFFF",
+				"navigationBarTextStyle": "black",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"width" : "70rpx",
+							"text": "提交",
+							"fontSize":"28rpx",
+							"color": "#1492FF"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/planAlllook/index",
+			"style":{
+				"navigationBarTitleText":"计划总览"
 			}
 		}
 	],
