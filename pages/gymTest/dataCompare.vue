@@ -1,51 +1,29 @@
 <template>
 	<view>
-		<view class="tabList isFlexSpace">
-			<picker @change="pickDwChange" :range="pickDw"><view><text class="lineOne">{{inpDw}}</text><image src="../../static/gymIcon/under.png"></image></view></picker>
-			<picker @change="pickXmChange" :range="pickXm"><view><text class="lineOne">{{inpXm}}</text><image src="../../static/gymIcon/under.png"></image></view></picker>
-		</view>
-		<view class="jx"></view>
+		<view class="tabList isFlexCenter">
+			<picker @change="pickDwChange"  :range-key="'testItem'" :range="pickDw"><view><text class="lineOne">{{inpDw}}</text><image src="../../static/gymIcon/under.png"></image></view></picker>
+			
+			<picker mode="date"  :start="startDate" :end="endDate"  @change="pickYearChange"  fields="year">
+				<view><text class="lineOne">{{inpYear}}</text><image src="../../static/gymIcon/under.png"></image></view>
+			</picker>
+		</view> 	
+			
+		
+		
+		<view class="jx" style="margin-top: 88rpx;"></view>   
 		<canvas canvas-id="canvasColumn" id="canvasColumn" class="charts"></canvas>
 		
 		
-		<view>
+		<view v-for="(item,index) in dataList">
 			<view class="jx"></view>
-			<view class="listTitle isFlexalitem">背脊垃圾</view>
+			<view class="listTitle isFlexalitem">{{item.item_name}}</view>
 			<view class="listInfo">
-				<view class="listInfoName">8月6日</view>
+				<view class="listInfoName">{{item.phy_start_time}}</view>
 				<view>
 					<text class="isGray">成绩</text>
-					<text>78</text>
+					<text>{{item.item_result}}</text>
 					<text class="isGray">评分</text>
-					<text>7.8</text>
-				</view>
-			</view>
-		</view>
-		
-		<view>
-			<view class="jx"></view>
-			<view class="listTitle isFlexalitem">背脊垃圾</view>
-			<view class="listInfo">
-				<view class="listInfoName">8月6日</view>
-				<view>
-					<text class="isGray">成绩</text>
-					<text>78</text>
-					<text class="isGray">评分</text>
-					<text>7.8</text>
-				</view>
-			</view>
-		</view>
-		
-		<view>
-			<view class="jx"></view>
-			<view class="listTitle isFlexalitem">背脊垃圾</view>
-			<view class="listInfo">
-				<view class="listInfoName">8月6日</view>
-				<view>
-					<text class="isGray">成绩</text>
-					<text>78</text>
-					<text class="isGray">评分</text>
-					<text>7.8</text>
+					<text>{{item.score}}</text>
 				</view>
 			</view>
 		</view>
@@ -55,10 +33,32 @@
 	var _this;
 	var canvaColumn;
 	import uCharts from '../../components/u-charts/u-charts.js';
+	function getDate(type) {
+		const date = new Date();
+	
+		let year = date.getFullYear();
+		let month = date.getMonth() + 1;
+		let day = date.getDate();
+	
+		if (type === 'start') {
+			year = year - 60;
+		} else if (type === 'end') {
+			year = year + 100;
+		}
+		month = month > 9 ? month : '0' + month;;
+		day = day > 9 ? day : '0' + day;
+	
+		return `${year}`;
+	}
 	export default {
-		onLoad() {
+		onLoad(option) {
+			console.log("optio: " + JSON.stringify(option));
 			_this = this;
-			
+			_this.basicId = option.basicId;
+			_this.initData();
+			_this.initPickerXm();
+			const date = new Date();
+			this.inpYear = date.getFullYear();
 		},
 		onReady() {
 			const query = uni.createSelectorQuery().in(this);
@@ -70,6 +70,21 @@
 		},
 		data() {
 			return {
+				basicId    : "",
+				dataList   : [],
+				
+				pickDw     : [],
+				inpDw      : "项目",
+				
+				pickXm     : [],
+				inpYear      : "",
+				inpDwId    : "",
+				//时间选择器参数
+				startDate :getDate('start'),
+				endDate   :getDate('end'),
+				startTime : "",
+				
+				//echart
 				cWidth  : "",
 				cHeight : "",
 				lineData: [{
@@ -78,28 +93,46 @@
 					color: '#BEF4ED',
 				}],
 				categories: ["第一季度","第二季度","第三季度","第四季度"],
-				
-				
-				
-				pickDw     : ['男范范德萨','女'],
-				inpDw      : "单位",
-				
-				pickXm     : ['1','2'],
-				inpXm      : "项目",
-				
-				pickCj     : ['50分','100分'],
-				inpCj      : "成绩",
 			}
 		},
 		methods:{
 			pickDwChange(e){
-				this.inpDw = this.pickDw[e.target.value];
+				this.inpDw    = this.pickDw[e.target.value].testItem;
+				this.inpDwId  = this.pickDw[e.target.value].id;
+				this.pickerApi();
 			},
-			pickXmChange(e){
-				this.inpXm = this.pickXm[e.target.value];
+			pickYearChange(e){
+				this.inpYear = e.target.value;
+				this.pickerApi();
 			},
-			pickCjChange(e){
-				this.inpCj = this.pickCj[e.target.value];
+			initPickerXm(){
+				this.ajaxGet(null,"testItem/getTestItemList",(res)=>{
+					_this.pickDw = res.data;
+				})
+			},
+			initData(basicId){						//初始化接口
+				var param = {
+					basicId : _this.basicId,
+					testYear: _this.inpYear
+				}
+				this.ajaxGet(param,"testItem/getTestListAll",(res)=>{
+					console.log("res: " + JSON.stringify(res));
+					_this.dataList = res.data;
+				})
+			},
+			pickerApi(){
+				var param = {
+					page    : 1,
+					limit   : 10,
+					basicId : _this.basicId,
+					itemId  : _this.inpDwId,
+					testYear: _this.inpYear
+				}
+				console.log("param: " + JSON.stringify(param));
+				this.ajaxGet(param,"testItem/getTestListAll",(res)=>{
+					console.log("res: " + JSON.stringify(res));
+					_this.dataList = res.data;
+				})
 			},
 			init(){
 				canvaColumn = new uCharts({
@@ -113,7 +146,10 @@
 						show:true,
 						position : "top",
 						float : "left",
-						margin : 10
+						margin : 10,
+					},
+					title : {
+						name : "你好"
 					},
 					dataLabel:true,
 					dataPointShape:true,
@@ -126,7 +162,8 @@
 						gridType : 'dash',
 						gridColor:'#BEF4ED',
 						gridEval : 1,
-						axisLineColor : "#BEF4ED"
+						axisLineColor : "#BEF4ED",
+						boundaryGap : "justify"
 					},
 					yAxis: {
 						gridType : 'dash',
@@ -166,6 +203,7 @@
 	page{
 		font-size:28rpx;
 		color: #333333;
+		background:white;
 	}
 	.listTitle{
 		height:68rpx;
@@ -192,21 +230,34 @@
 	
 	
 	.tabList{
-		width: 450rpx;
-		height: 82rpx;
+		width: 100%;
+		height: 88rpx;
 		font-size: 26rpx;
 		color: #333333;
 		font-weight: bold;
 		padding: 0 42rpx;
 		box-sizing:border-box;
 		margin: 0 auto;
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 2;
+		background: white;
 		view{
+			width:240rpx;
 			display: flex;
 			align-items:center;
+			justify-content: center;
 			text{
 				display:inline-block;
-				max-width:240rpx;
+				max-width:120rpx;
 			}
+		}
+		.center{
+			justify-content: center;
+		}
+		.right{
+			justify-content: flex-end;
 		}
 		image{
 			width: 24rpx;
@@ -214,10 +265,5 @@
 			margin-top:6rpx;
 			margin-left: 8rpx;
 		}
-	}
-	&>image{
-		width: 24rpx;
-		height: 22rpx;
-		margin-top: 4rpx;
 	}
 </style>

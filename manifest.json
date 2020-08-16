@@ -77,12 +77,12 @@
     },
     "h5" : {
         "title" : "体能测试",
-        "domain" : "http://wx.hzjyty.com",
+        "domain" : "http://sdq.wzbbh.top",
         "devServer" : {
             "https" : false
         },
         "router" : {
-            "base" : "/ceshi/"
+            "base" : ""
         }
     }
 }

@@ -1,7 +1,9 @@
 <script>
 	export default {
 		onLaunch: function() {
-			console.log('App Launch')
+			console.log('App Launch');
+			uni.setStorageSync('apiToken','5e060ed4-04ce-4092-a370-3cc6befb80e7');
+			uni.setStorageSync('access_token','f18fd919-1004-4f8f-ad4f-fee7ce1237cb');
 		},
 		onShow: function() {
 			console.log('App Show')
