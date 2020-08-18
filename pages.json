@@ -12,12 +12,17 @@
 			}
 		},
 		{
+			"path": "pages/planAlllook/weekLook",
+			"style":{
+				"navigationBarTitleText":"周计划总览"
+			}
+		},
+		{
 			"path": "pages/home/index",
 			"style":{
 				"navigationBarTitleText":"首页"
 			}
 		},
-		
 		
 		{
 			"path": "pages/home/idea",

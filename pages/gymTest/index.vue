@@ -12,15 +12,19 @@
 				<picker @change="pickXmChange" :range-key="'testItem'"    :range="pickXm"><view class="center"><text class="lineOne">{{inpXm}}</text><image src="../../static/gymIcon/under.png"></image></view></picker>
 				<picker @change="pickCjChange" :range="pickCj"><view class="right"><text class="lineOne">{{inpCj}}</text><image src="../../static/gymIcon/under.png"></image></view></picker>
 			</view>
-			<image src="../../static/gymIcon/all.png" @click="changeShowDom"></image>
+			<view>
+				<image src="../../static/gymIcon/all.png" @click="changeShowDom"  v-if="Cindex==0"></image>
+				<image src="../../static/gymIcon/allNext.png" @click="changeShowDom"  v-if="Cindex==1"></image>
+			</view>
 		</view>
 		
 		
 		<view class="main">
+			
 			<view v-if="Cindex==0">
 				<view class="objectList isFlexSpace"  @click="look(item.id)" v-for="(item,index) in listInitData" :key="index">
 					<view class="isFlexalitem">
-						<image class="objectPhoto" src="../../static/logo.png"></image>
+						<image class="objectPhoto" :src="item.imgSrc"></image>
 						<view>
 							<view>
 								<image src="../../static/gymIcon/name.png"></image>
@@ -55,10 +59,10 @@
 							<image src="../../static/gymIcon/nzb.png"></image>
 							<text>{{item.phy_start_time}}</text>
 						</view>
-						<text @click="look">查看详情</text>
+						<text @click="look(item.id)">查看详情</text>
 					</view>
 					<table  border="1" cellpadding="0" cellspacing="0">
-						<tr class="titleTr titleListDataActive">
+						<tr class="titleListDataActive">
 							<th class="tableOne">姓名</th>
 							<th class="tableTabproject borLeftNone">项目</th>
 							<th class="tableOne">成绩</th>
@@ -72,6 +76,9 @@
 							<th>{{item.score}}</th>
 						</tr>
 					 </table>
+				</view>
+				<view class="noData isFlexCenter" v-if="listInitData==''">
+					暂无当前查询数据
 				</view>
 			</view>
 			
@@ -96,7 +103,7 @@
 					<view class="borLeftNone">成绩</view>
 					<view class="borLeftNone">评分</view>
 				</view>
-				<view class="titleListData   isFlexalitem borNoneTopAvtive"  v-for="(item,index) in listInitData">
+				<view class="titleListData   isFlexalitem borNoneTopAvtive"  v-for="(item,index) in listInitData" :key="index">
 					<view>{{item.phy_start_time}}</view>
 					<view class="borLeftNone">{{item.basic_name}}</view>
 					<view class="borLeftNone isSmallFont">{{item.basic_sex}}</view>
@@ -112,11 +119,11 @@
 				<scroll-view class="scroll-view-box" scroll-y="true">
 					 <view class="scrollTitle">性别</view>
 					 <view class="scrollBtnList">
-						 <view  :class="{'isBlue':sexListCin==index}" v-for="(item,index) in sexList" @click="rigSexChoose(index)">{{item}}</view>
+						 <view  :class="{'isBlue':sexListCin==index}" v-for="(item,index) in sexList"  :key="index" @click="rigSexChoose(index)">{{item}}</view>
 					 </view>
 					 <view class="scrollTitle">年龄段</view>
 					 <view class="scrollBtnList">
-						<view  :class="{'isBlue':ageListCin==index}" v-for="(item,index) in ageList" @click="rigAgeChoose(index)">
+						<view  :class="{'isBlue':ageListCin==index}" v-for="(item,index) in ageList"  :key="index" @click="rigAgeChoose(index)">
 							<text v-if="item.min<24">{{item.min}}~{{item.max}}</text>
 							
 							<text v-if="item.max==''">{{item.min}}</text>
@@ -125,7 +132,7 @@
 					 </view>
 					 <view class="scrollTitle">其它项</view>
 					 <view class="scrollBtnList">
-						 <view  :class="{'isBlue':otherListCin==index}" v-for="(item,index) in otherList" @click="rigOtherChoose(index,item.itemId)">{{item.name}}</view>
+						 <view  :class="{'isBlue':otherListCin==index}" :key="index" v-for="(item,index) in otherList" @click="rigOtherChoose(index,item.itemId)">{{item.name}}</view>
 					 </view>
 					 <view class="scrollIsBtn isFlexSpace">
 						 <view @click="cancle">取消</view>
@@ -135,13 +142,18 @@
 				</scroll-view>
 			</view>
 		</uni-drawer>
-
 	</view>
 </template>
 <script>
 	var _this;
+	var config = require('../../common/config.js');
+	var util   = require('../../common/util.js');
 	export default {
-		onLoad() {
+		onLoad(option) {
+			uni.setStorageSync('apiToken','176c304a-c78e-4741-af62-5e8d72d78e3e');
+			uni.setStorageSync('access_token','bd15dc12-c21b-4dd3-b67c-6593c5c54cf1');
+			// uni.setStorageSync('apiToken',option.apiToken);
+			// uni.setStorageSync('access_token',option.accessToken);
 			_this = this;
 			this.init();
 			this.initPickerDw();
@@ -179,6 +191,8 @@
 				ageList    : [{min:6,max:8},{min:9,max:11},{min:12,max:14},{min:15,max:17},{min:18,max:20},{min:21,max:23},{min:"24以上",max:""},{min:"全部",max:"all"}],
 				ageListCin : 0,
 				otherList  : [{name:'100米', itemId :287},{name:'400米', itemId:288}],
+				baItemID   : 287,
+				
 				otherListCin: 0,
 				startAge :  "6",
 				endAge   :  "8",
@@ -187,7 +201,9 @@
 				
 				basicSex :  "",
 				baStarage: "",
-				baEndage : ""
+				baEndage : "",
+				
+				lookData : []
 			}	
 		},
 		methods: {
@@ -241,7 +257,7 @@
 			},
 			rigOtherChoose(index,itemId){	//侧滑其它选择
 				this.otherListCin = index;
-				this.itemId = itemId;
+				this.baItemID = itemId;
 			},
 			showDrawer(e) {
 				this.$refs[e].open();
@@ -267,21 +283,52 @@
 				}
 			},
 			confirm(){		//搜索
-				uni.showToast({
-					title : "功能未开放"
-				})
-				return
 				if(this.inpSearch.trim()==''){
 					uni.showToast({
 						title : "输入不能为空"
 					})
 					return
 				}
+				var param = {
+					page    :  1,
+					limit   :  10,
+					itemId  : this.inpXmID,		//项目ID  
+					deptId  : this.deptId,		//单位ID
+					orderNum: this.inpCjNum,
+					basicName : this.inpSearch
+				}
+				this.ajaxGet(param,"testItem/getTestListAll",(res)=>{
+					if(res.code==0){
+						_this.getSrc(res.data);
+						if(res.data==''){
+							uni.showToast({
+								title : "查询数据为空"
+							})
+						}else{
+							uni.showToast({
+								title : res.msg
+							})
+						}
+					}
+				})
 			},
 			init(){						//初始化接口
 				this.ajaxGet(null,"testItem/getTestListAll",(res)=>{
-					_this.listInitData = res.data;
+					_this.getSrc(res.data);
 				})
+			},
+			getSrc(data){
+				for(var i=0;i<data.length;i++){
+					var temp = data[i];
+					var url  = config.getUserPhotoSrc+'api-file/files-anon/download?';
+					var str = "access_token="+uni.getStorageSync('access_token')+"&fileID="+temp.file_info_url;
+					if(temp.file_info_url!=null){
+						_this.$set(temp,'imgSrc',url+str);
+					}else{
+						_this.$set(temp,'imgSrc','/static/icon/noPhoto.png');
+					}
+				}
+				_this.listInitData = data;
 			},
 			searchApiByPicker(){		//picker选择
 				var param = {
@@ -293,7 +340,7 @@
 				}
 				this.ajaxGet(param,"testItem/getTestListAll",(res)=>{
 					if(res.code==0){
-						_this.listInitData = res.data;
+						_this.getSrc(res.data);
 						if(res.data==''){
 							uni.showToast({
 								title : "查询数据为空"
@@ -314,7 +361,7 @@
 							page    :  1,
 							limit   :  10,
 							basicSex: '',
-							itemId  : this.inpXmID,		
+							itemId  : this.baItemID,		
 							deptId  : this.deptId,		
 							orderNum: this.inpCjNum
 						}
@@ -325,7 +372,7 @@
 							basicSex: "",
 							startAge: this.startAge,
 							endAge  : this.endAge,
-							itemId  : this.inpXmID,		
+							itemId  : this.baItemID,		
 							deptId  : this.deptId,		
 							orderNum: this.inpCjNum,
 						}
@@ -336,7 +383,7 @@
 							page    :  1,
 							limit   :  10,
 							basicSex: this.basicSex,
-							itemId  : this.inpXmID,		//项目ID
+							itemId  : this.baItemID,	//项目ID
 							deptId  : this.deptId,		//单位ID
 							orderNum: this.inpCjNum
 						}
@@ -348,7 +395,7 @@
 							basicSex: this.basicSex,
 							startAge: this.startAge,
 							endAge  : this.endAge,
-							itemId  : this.inpXmID,		//项目ID
+							itemId  : this.baItemID,		//项目ID
 							deptId  : this.deptId,		//单位ID
 							orderNum: this.inpCjNum
 						}
@@ -356,7 +403,7 @@
 				}
 				this.ajaxGet(param,"testItem/getTestListAll",(res)=>{
 					if(res.code==0){
-						_this.listInitData = res.data;
+						_this.getSrc(res.data);
 						if(res.data==''){
 							uni.showToast({
 								title : "查询数据为空"
@@ -455,10 +502,17 @@
 				margin-left: 8rpx;
 			}
 		}
-		&>image{
-			width: 24rpx;
-			height: 22rpx;
-			margin-top: 4rpx;
+		&>view{
+			flex: 1;
+			height: 100%;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			image{
+				width: 24rpx;
+				height: 22rpx;
+				margin-top: 4rpx;
+			}
 		}
 	}
 	.main{
@@ -492,15 +546,15 @@
 				}
 			}
 			.nzBox{
-				margin-top: 12rpx;
+				margin-top: 6rpx;
 				font-weight: bold;
 			}
 			.objectName{
 				margin-right: 46rpx;
 			}
 			.masou{
-				width: 82rpx;
-				height: 82rpx;
+				width: 84rpx;
+				height: 84rpx;
 			}
 			.sex{
 				width: 14rpx;
@@ -513,7 +567,7 @@
 				border-radius: 50%;
 				position: absolute;
 				top: 32rpx;
-				left: 70rpx;
+				left: 72rpx;
 			}
 		}
 	}
@@ -600,7 +654,7 @@
 	table{
 		width: 710rpx;
 		margin:12px auto;
-		border:0.5rpx solid #8CD9C7;
+		border:1rpx solid #8CD9C7;
 		border-collapse:collapse;
 		font-size: 26rpx;
 		th{

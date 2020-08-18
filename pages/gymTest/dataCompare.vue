@@ -11,10 +11,10 @@
 		
 		
 		<view class="jx" style="margin-top: 88rpx;"></view>   
-		<canvas canvas-id="canvasColumn" id="canvasColumn" class="charts"></canvas>
+		<canvas canvas-id="canvasColumn" id="canvasColumn" class="charts" @touchstart="touchColumn"></canvas>
 		
 		
-		<view v-for="(item,index) in dataList">
+		<view v-for="(item,index) in dataList" :key="index">
 			<view class="jx"></view>
 			<view class="listTitle isFlexalitem">{{item.item_name}}</view>
 			<view class="listInfo">
@@ -65,7 +65,6 @@
 			query.select('#canvasColumn').boundingClientRect(data => {
 				_this.cWidth = data.width;
 				_this.cHeight = data.height;
-				_this.init();
 			}).exec();
 		},
 		data() {
@@ -88,11 +87,11 @@
 				cWidth  : "",
 				cHeight : "",
 				lineData: [{
-					name: '成绩',
-					data: [35, 20, 55, 30],
+					name: '评分',
+					data: [],
 					color: '#BEF4ED',
 				}],
-				categories: ["第一季度","第二季度","第三季度","第四季度"],
+				categories: [],
 			}
 		},
 		methods:{
@@ -105,8 +104,30 @@
 				this.inpYear = e.target.value;
 				this.pickerApi();
 			},
+			pickerApi(){
+				var param = {
+					page    : 1,
+					limit   : 10,
+					basicId : _this.basicId,
+					itemId  : _this.inpDwId,
+					testYear: _this.inpYear
+				}
+				this.ajaxGet(param,"testItem/getTestListAll",(res)=>{
+					if(res.data==''){
+						uni.showToast({
+							title : "查询数据为空"
+						})
+						return
+					}
+					_this.dataList = res.data;
+					_this.initCanvas(res,2);
+				})
+			},
 			initPickerXm(){
-				this.ajaxGet(null,"testItem/getTestItemList",(res)=>{
+				var param = {
+					basicId : _this.basicId,
+				}
+				this.ajaxGet(param,"testItem/getTestItemListByBasicId",(res)=>{
 					_this.pickDw = res.data;
 				})
 			},
@@ -116,29 +137,61 @@
 					testYear: _this.inpYear
 				}
 				this.ajaxGet(param,"testItem/getTestListAll",(res)=>{
-					console.log("res: " + JSON.stringify(res));
 					_this.dataList = res.data;
+					_this.initCanvas(res);
 				})
 			},
-			pickerApi(){
-				var param = {
-					page    : 1,
-					limit   : 10,
-					basicId : _this.basicId,
-					itemId  : _this.inpDwId,
-					testYear: _this.inpYear
+			initCanvas(res,type){
+				var arry = res.data.filter((item,index)=>{
+					if(index<4){
+						return item
+					}
+				})
+				var arryLineData = [];
+				var arryCateData = [];
+				for(var i=0;i<arry.length;i++){
+					var item = arry[i];
+					if(item.item_result==''){
+						item.item_result = 0;
+					}
+					if(item.score==''){
+						item.score = 0;
+					}
+					var obj = {
+						value : item.score,
+						name  : "成绩"+item.item_result
+					}
+					arryLineData.push(obj);
+					if(item.season==1){
+						arryCateData.push('第一季度')
+					}else if(item.season==2){
+						arryCateData.push('第二季度')
+					}else if(item.season==3){
+						arryCateData.push('第三季度')
+					}else if(item.season==4){
+						arryCateData.push('第四季度')
+					}
 				}
-				console.log("param: " + JSON.stringify(param));
-				this.ajaxGet(param,"testItem/getTestListAll",(res)=>{
-					console.log("res: " + JSON.stringify(res));
-					_this.dataList = res.data;
-				})
+				_this.lineData[0].data = arryLineData;
+				_this.categories       = arryCateData;
+				_this.initCanvaColumn();
 			},
-			init(){
+			touchColumn(e){
+				canvaColumn.showToolTip(e, {
+					format: function (item, category) {
+						if(typeof item.data === 'object'){
+							return category + ' ' + item.data.name
+						}else{
+							return category + ' ' + item.data.name + ':' + item.data 
+						}
+					}
+				});
+			},
+			initCanvaColumn(){
 				canvaColumn = new uCharts({
 					$this      : _this,
 					canvasId   : "canvasColumn",
-					type	   : "area", //图表类型pie、line、column、area、ring、radar、arcbar、gauge、candle、bar、mix、rose、word
+					type	   : "column", //图表类型pie、line、column、area、ring、radar、arcbar、gauge、candle、bar、mix、rose、word
 					fontSize   : 12,
 					width	   : _this.cWidth,
 					height	   : _this.cHeight,
@@ -147,9 +200,6 @@
 						position : "top",
 						float : "left",
 						margin : 10,
-					},
-					title : {
-						name : "你好"
 					},
 					dataLabel:true,
 					dataPointShape:true,
@@ -163,7 +213,7 @@
 						gridColor:'#BEF4ED',
 						gridEval : 1,
 						axisLineColor : "#BEF4ED",
-						boundaryGap : "justify"
+						// boundaryGap : "justify"
 					},
 					yAxis: {
 						gridType : 'dash',
@@ -172,11 +222,12 @@
 							{
 								axisLineColor : "#BEF4ED",
 								min:0,
-								max:100,
+								max:10,
 								dashLength:8,
-								splitNumber:5,
+								splitNumber:4,
 							}
-						]
+						],
+						padding:"20px",
 					},	
 					extra: {
 						area:{

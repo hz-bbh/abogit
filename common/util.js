@@ -351,6 +351,36 @@ function xhrUpladFile(url,fileObj,paramArry,func,onprogress,error) {
 
 
 
+function getUserPhotoAjax(ApiUrl,obj,apiName,succCallback){
+	console.log("obj: " + JSON.stringify(obj));
+	uni.request({
+		url: ApiUrl + apiName,
+		data: obj,  
+		method: 'POST',  
+		header : {
+			'content-type':'application/x-www-form-urlencoded'
+		},
+		withCredentials:true,
+		sslVerify : false,
+		dataType: 'json',
+		success: function (data) {
+			if(data.data.code==0){
+				  succCallback(data.data);
+			}else{
+				console.log("post请求返回失败: " + JSON.stringify(data.data));
+				uni.showToast({
+					title : data.data.msg
+				})
+			}		
+		},
+		fail: function (res) {	
+			uni.showToast({
+				title : JSON.stringify(res)
+			})
+		}
+	})
+}
+
 module.exports = {
 	setNumer     : setNumer,
 	arryClear    : arryClear,
@@ -371,5 +401,6 @@ module.exports = {
 	xhrUpladFile : xhrUpladFile,
 	converMB     : converMB,
 	arryClearObj : arryClearObj,
-	getNowTime   : getNowTime
+	getNowTime   : getNowTime,
+	getUserPhotoAjax : getUserPhotoAjax
 }
