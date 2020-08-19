@@ -77,7 +77,7 @@
     },
     "h5" : {
         "title" : "体能测试",
-        "domain" : "http://sdq.wzbbh.top",
+        "domain" : "http://gl.tyj.zj.gov.cn",
         "devServer" : {
             "https" : false
         },

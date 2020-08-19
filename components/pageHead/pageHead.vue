@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="tabTop isFlexalitem">
+		<view class="tabTop isFlexalitem"  :style="{'background':background}">
 			<view @click="goBack" class="isLeft"><image :src="backImg"></image></view>
 			<view class="isCenter" :style="{'color':color}">{{name}}</view>
 			<view class="isRight">
@@ -16,6 +16,10 @@
 			backImg:{
 				type : String,
 				default:"/static/icon/back.png"
+			},
+			background : {
+				type : String,
+				default: ""
 			},
 			color:{
 				type : String,

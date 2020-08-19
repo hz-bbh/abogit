@@ -1,9 +1,9 @@
 <template>
 	<view>
 		<view class="headList" :style="{'background':obj.background}">
-			<view class="pickerName">{{obj.name}}</view>
-			<view class="pickerTime  isFlexalitem"><image src="../../static/gymIcon/nz.png"></image><text>时间:</text><text>{{obj.startTime}}</text>~<text>{{obj.endTime}}</text></view>
-			<view class="picerPreson isFlexalitem"><image class="nav" src="../../static/icon/nav.png"></image><text>人员:</text><text>{{obj.preson}}</text></view>
+			<view class="pickerName" >{{obj.name}}</view>
+			<view class="pickerTime  isFlexalitem" v-if="obj.startTime"><image src="../../static/gymIcon/nz.png"></image><text>时间:</text><text>{{obj.startTime}}</text>~<text>{{obj.endTime}}</text></view>
+			<view class="picerPreson isFlexalitem" v-if="obj.add"><image class="nav" src="../../static/icon/nav.png"></image><text>地点:</text><text>{{obj.add}}</text></view>
 		</view>
 	</view>
 </template>

@@ -37,9 +37,9 @@ Vue.prototype.ajaxPost  = function(obj,apiName,succCallback){
 			if(data.data.code==0){
 				succCallback(data.data);
 			}else{
-				// if(data.data.code==1){
-				// 	location.href = "http://223.4.69.177/train-project/home.html"
-				// }
+				if(data.data.code==1){
+					location.href = "http://223.4.69.177/train-project/home.html"
+				}
 				uni.showToast({
 					title : data.data.msg
 				})
@@ -87,7 +87,7 @@ Vue.prototype.ajaxGet  = function(obj,apiName,succCallback){
 				succCallback(data.data);
 			}else{
 				if(data.data.code==1){
-					// location.href = "http://223.4.69.177/train-project/home.html"
+					location.href = "http://223.4.69.177/train-project/home.html"
 				}
 				console.log("请求失败: " + JSON.stringify(data.data));
 				uni.showToast({

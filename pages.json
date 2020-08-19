@@ -1,14 +1,113 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages、、
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/gymTest/index",
+			"path": "pages/home/index",
 			"style":{
-				"navigationBarTitleText":"体能测试",
-				"app-plus":{
-					"titleNView" : {
-						"backgroundColor" : "#FFFFFF"
+				"navigationBarTitleText":"首页"
+			}
+		},
+		{
+			"path": "pages/sportMan/sportDefault",
+			"style":{
+				"navigationBarTitleText":"运动员详情（暂定）"
+			}
+		},
+		{
+			"path": "pages/sportMan/sportDefaultDxJl",
+			"style":{
+				"navigationBarTitleText":"带训教练"
+			}
+		},
+		{
+			"path": "pages/coachMan/index",
+			"style":{
+				"navigationBarTitleText":"教练员"
+			}
+		},
+		{
+			"path": "pages/manAgeMan/index",
+			"style":{
+				"navigationBarTitleText":"管理保障人员"
+			}
+		},
+		{
+			"path": "pages/sportMan/sportDefalutSchoolRoll",
+			"style":{
+				"navigationBarTitleText":"学籍信息"
+			}
+		},
+		{
+			"path": "pages/sportMan/sportDefaultRegiter",
+			"style":{
+				"navigationBarTitleText":"注册信息"
+			}
+		},
+		{
+			"path": "pages/sportMan/sportDefaultSkill",
+			"style":{
+				"navigationBarTitleText":"技术档案"
+			}
+		},
+		{
+			"path": "pages/sportMan/sportDefaultJoinHis",
+			"style":{
+				"navigationBarTitleText":"参赛记录"
+			}
+		},
+		{
+			"path": "pages/sportMan/sportDefaultJoinAdd",
+			"style":{
+				"navigationStyle": "default",
+				"navigationBarTitleText":"参赛记录",
+				"navigationBarBackgroundColor":"#FFFFFF",
+				"navigationBarTextStyle": "black",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"width" : "70rpx",
+							"text": "提交",
+							"fontSize":"28rpx",
+							"color": "#1492FF"
+						}]
 					}
 				}
+			}
+		},
+		
+		{
+			"path": "pages/sportMan/index",
+			"style":{
+				"navigationBarTitleText":"运动员"
+			}
+		},
+		{
+			"path": "pages/planAlllook/yearLookAll",
+			"style":{
+				"navigationBarTitleText":"年度总结总览"
+			}
+		},
+		{
+			"path": "pages/planAlllook/jieduanLookAll",
+			"style":{
+				"navigationBarTitleText":"阶段总结总览"
+			}
+		},
+		{
+			"path": "pages/planAlllook/yearLook",
+			"style":{
+				"navigationBarTitleText":"年计划总览"
+			}
+		},
+		{
+			"path": "pages/planAlllook/jieDuanLook",
+			"style":{
+				"navigationBarTitleText":"阶段计划总览"
+			}
+		},
+		{
+			"path": "pages/planAlllook/lessLook",
+			"style":{
+				"navigationBarTitleText":"课时计划总览"
 			}
 		},
 		{
@@ -17,12 +116,7 @@
 				"navigationBarTitleText":"周计划总览"
 			}
 		},
-		{
-			"path": "pages/home/index",
-			"style":{
-				"navigationBarTitleText":"首页"
-			}
-		},
+		
 		
 		{
 			"path": "pages/home/idea",

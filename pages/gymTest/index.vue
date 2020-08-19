@@ -150,10 +150,10 @@
 	var util   = require('../../common/util.js');
 	export default {
 		onLoad(option) {
-			uni.setStorageSync('apiToken','176c304a-c78e-4741-af62-5e8d72d78e3e');
-			uni.setStorageSync('access_token','bd15dc12-c21b-4dd3-b67c-6593c5c54cf1');
-			// uni.setStorageSync('apiToken',option.apiToken);
-			// uni.setStorageSync('access_token',option.accessToken);
+			// uni.setStorageSync('apiToken','176c304a-c78e-4741-af62-5e8d72d78e3e');
+			// uni.setStorageSync('access_token','bd15dc12-c21b-4dd3-b67c-6593c5c54cf1');
+			uni.setStorageSync('apiToken',option.apiToken);
+			uni.setStorageSync('access_token',option.accessToken);
 			_this = this;
 			this.init();
 			this.initPickerDw();

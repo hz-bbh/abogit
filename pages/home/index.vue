@@ -165,7 +165,22 @@
 				}
 			},
 			goUrl(id){
-				if(id==7){
+				if(id==1){
+					uni.navigateTo({
+						url : "../sportMan/index"
+					})
+				}
+				else if(id==2){
+					uni.navigateTo({
+						url : "../coachMan/index"
+					})
+				}
+				else if(id==3){
+					uni.navigateTo({
+						url : "../manAgeMan/index"
+					})
+				}
+				else if(id==7){
 					uni.navigateTo({
 						url : "../book/index"
 					})
